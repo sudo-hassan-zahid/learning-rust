@@ -1,3 +1,87 @@
+// GENERICS AND TRAITS
+
+// Generic function
+fn largest<T: PartialOrd>(list: &[T]) -> &T {
+    let mut largest = &list[0];
+    for item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
+// Generic struct
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+// Trait definition
+trait Summary {
+    fn summarize(&self) -> String;
+}
+
+// Implementing trait for a struct
+struct Article {
+    headline: String,
+    author: String,
+    content: String,
+}
+
+impl Summary for Article {
+    fn summarize(&self) -> String {
+        format!("{} by {}", self.headline, self.author)
+    }
+}
+
+// Enums
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+// Struct
+struct Person {
+    name: String,
+    age: u8,
+}
+
+impl Person {
+    fn greet(&self) {
+        println!("Hello, my name is {}", self.name);
+    }
+
+    fn have_birthday(&mut self) {
+        self.age += 1;
+    }
+}
+
+// Functions returning Result
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        Err(String::from("Cannot divide by zero"))
+    } else {
+        Ok(a / b)
+    }
+}
+
+fn try_divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        return Err(String::from("division by zero"));
+    }
+    Ok(a / b)
+}
+
 fn main() {
     // immutable variable
     let x = 10;
@@ -111,20 +195,10 @@ fn main() {
     };
     println!("day_name = {}", day_name);
 
-    // enums
-    // defining an enum
-    enum Direction {
-        Up,
-        Down,
-        Left,
-        Right,
-    }
-
-    // using the enum
+    // using enums
     let move1 = Direction::Up;
     let move2 = Direction::Left;
 
-    // match with enum
     match move1 {
         Direction::Up => println!("Moving up"),
         Direction::Down => println!("Moving down"),
@@ -139,18 +213,9 @@ fn main() {
         Direction::Right => println!("Moving right"),
     }
 
-    // enum with data
-    enum Message {
-        Quit,
-        Move { x: i32, y: i32 },
-        Write(String),
-        ChangeColor(i32, i32, i32),
-    }
-
     let msg1 = Message::Write(String::from("hello"));
     let msg2 = Message::Move { x: 10, y: 20 };
 
-    // pattern matching with data
     match msg1 {
         Message::Quit => println!("Quit message"),
         Message::Move { x, y } => println!("Move to ({}, {})", x, y),
@@ -162,16 +227,10 @@ fn main() {
         Message::Quit => println!("Quit message"),
         Message::Move { x, y } => println!("Move to ({}, {})", x, y),
         Message::Write(text) => println!("Write message: {}", text),
-        Message::Chang
-
-    // struct
-    // defining a struct
-    struct Person {
-        name: String,
-        age: u8,
+        Message::ChangeColor(r, g, b) => println!("Change color to {},{},{}", r, g, b),
     }
 
-    // creating instances
+    // struct usage
     let person1 = Person {
         name: String::from("Hassan"),
         age: 25,
@@ -182,31 +241,16 @@ fn main() {
         age: 30,
     };
 
-    // accessing fields
     println!("{} is {} years old", person1.name, person1.age);
-
-    // modifying fields (requires mut)
     person2.age += 1;
     println!("{} is now {} years old", person2.name, person2.age);
 
-    // defining methods with impl
-    impl Person {
-        fn greet(&self) {
-            println!("Hello, my name is {}", self.name);
-        }
-
-        fn have_birthday(&mut self) {
-            self.age += 1;
-        }
-    }
-
-    // calling methods
     person1.greet();
     person2.greet();
     person2.have_birthday();
     println!("After birthday, {} is {} years old", person2.name, person2.age);
 
-    // Option type (value may exist or not)
+    // Option type
     let some_number: Option<i32> = Some(10);
     let no_number: Option<i32> = None;
 
@@ -220,19 +264,10 @@ fn main() {
         None => println!("No number found"),
     }
 
-    // unwrap and unwrap_or
     println!("some_number = {}", some_number.unwrap());
     println!("no_number or default = {}", no_number.unwrap_or(0));
 
-    // Result type (for errors)
-    fn divide(a: i32, b: i32) -> Result<i32, String> {
-        if b == 0 {
-            Err(String::from("Cannot divide by zero"))
-        } else {
-            Ok(a / b)
-        }
-    }
-
+    // Result type
     let result1 = divide(10, 2);
     let result2 = divide(10, 0);
 
@@ -246,14 +281,32 @@ fn main() {
         Err(e) => println!("Error: {}", e),
     }
 
-    // using ? operator in a function
-    fn try_divide(a: i32, b: i32) -> Result<i32, String> {
-        if b == 0 {
-            return Err(String::from("division by zero"));
-        }
-        Ok(a / b)
-    }
-
     let r = try_divide(20, 4).unwrap();
     println!("20 / 4 = {}", r);
+
+    // Using generic function
+    let numbers = vec![34, 50, 25, 100, 65];
+    let max_number = largest(&numbers);
+    println!("The largest number is {}", max_number);
+
+    let chars = vec!['y', 'm', 'a', 'q'];
+    let max_char = largest(&chars);
+    println!("The largest char is {}", max_char);
+
+    // Using generic struct
+    let int_point = Point { x: 5, y: 10 };
+    let float_point = Point { x: 1.2, y: 3.4 };
+    println!(
+        "int_point: ({}, {}), float_point: ({}, {})",
+        int_point.x, int_point.y, float_point.x, float_point.y
+    );
+
+    // Using trait
+    let article = Article {
+        headline: String::from("Rust is awesome"),
+        author: String::from("Hassan"),
+        content: String::from("Learn Rust step by step"),
+    };
+
+    println!("Article summary: {}", article.summarize());
 }
