@@ -205,4 +205,55 @@ fn main() {
     person2.greet();
     person2.have_birthday();
     println!("After birthday, {} is {} years old", person2.name, person2.age);
+
+    // Option type (value may exist or not)
+    let some_number: Option<i32> = Some(10);
+    let no_number: Option<i32> = None;
+
+    match some_number {
+        Some(n) => println!("We have a number: {}", n),
+        None => println!("No number found"),
+    }
+
+    match no_number {
+        Some(n) => println!("We have a number: {}", n),
+        None => println!("No number found"),
+    }
+
+    // unwrap and unwrap_or
+    println!("some_number = {}", some_number.unwrap());
+    println!("no_number or default = {}", no_number.unwrap_or(0));
+
+    // Result type (for errors)
+    fn divide(a: i32, b: i32) -> Result<i32, String> {
+        if b == 0 {
+            Err(String::from("Cannot divide by zero"))
+        } else {
+            Ok(a / b)
+        }
+    }
+
+    let result1 = divide(10, 2);
+    let result2 = divide(10, 0);
+
+    match result1 {
+        Ok(val) => println!("10 / 2 = {}", val),
+        Err(e) => println!("Error: {}", e),
+    }
+
+    match result2 {
+        Ok(val) => println!("10 / 0 = {}", val),
+        Err(e) => println!("Error: {}", e),
+    }
+
+    // using ? operator in a function
+    fn try_divide(a: i32, b: i32) -> Result<i32, String> {
+        if b == 0 {
+            return Err(String::from("division by zero"));
+        }
+        Ok(a / b)
+    }
+
+    let r = try_divide(20, 4).unwrap();
+    println!("20 / 4 = {}", r);
 }
