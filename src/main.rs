@@ -371,4 +371,67 @@ fn main() {
     // Construct unused Message variants
     let _ = Message::Quit;
     let _ = Message::ChangeColor(0, 0, 0);
+
+     // Closures (anonymous functions)
+    let add = |a: i32, b: i32| -> i32 { a + b };
+    let result = add(5, 3);
+    println!("5 + 3 = {}", result);
+
+    // Closure capturing environment
+    let x = 10;
+    let multiply = |y| y * x; // captures x
+    println!("5 * x = {}", multiply(5));
+
+    // Simple iterator over a vector
+    let numbers = vec![1, 2, 3, 4, 5];
+    for num in numbers.iter() {
+        println!("number = {}", num);
+    }
+
+    // Using map to transform elements
+    let numbers = vec![1, 2, 3, 4, 5];
+    let doubled: Vec<i32> = numbers.iter().map(|n| n * 2).collect();
+    println!("Doubled = {:?}", doubled);
+
+    // Using filter to select elements
+    let numbers = vec![10, 15, 20, 25, 30];
+    let even: Vec<i32> = numbers.iter().filter(|n| *n % 2 == 0).cloned().collect();
+    println!("Even numbers = {:?}", even);
+
+    // Using enumerate to get index + value
+    let letters = vec!['a', 'b', 'c'];
+    for (i, letter) in letters.iter().enumerate() {
+        println!("Index {} = {}", i, letter);
+    }
+
+    // Using fold to reduce to single value
+    let sum: i32 = numbers.iter().fold(0, |acc, n| acc + n);
+    println!("Sum = {}", sum);
+
+    // Combining iterator adapters
+    let combined: Vec<i32> = (1..10)
+        .filter(|n| n % 2 == 0)
+        .map(|n| n * n)
+        .collect();
+    println!("Squares of even numbers 1..9 = {:?}", combined);
+
+    // Sorting iterator results
+    let mut nums = vec![3, 5, 1, 4, 2];
+    nums.sort();
+    println!("Sorted nums = {:?}", nums);
+
+    // Using closures with custom sort
+    let mut people = vec!["Alice", "Bob", "Charlie"];
+    people.sort_by(|a, b| b.len().cmp(&a.len())); // sort by length descending
+    println!("People sorted by name length = {:?}", people);
+
+    // Iterator for Option
+    let some_val = Some(5);
+    let doubled_val: Option<i32> = some_val.map(|v| v * 2);
+    println!("Some doubled value = {:?}", doubled_val);
+
+    // Iterator for Result
+    let res: Result<i32, &str> = Ok(10);
+    let res_squared = res.map(|v| v * v);
+    println!("Result squared = {:?}", res_squared);
 }
