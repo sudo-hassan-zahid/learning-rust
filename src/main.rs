@@ -39,7 +39,6 @@ fn main() {
     // unused variable
     let _unused = 42;
 
-    // next concept: data types
     let inferred_number = 42;
     let inferred_float = 2.5;
     println!("inferred_number = {}, inferred_float = {}", inferred_number, inferred_float);
@@ -59,4 +58,56 @@ fn main() {
     let mut scores = [90, 85, 88];
     scores[1] = 95;
     println!("scores = {:?}", scores);
+
+    // conditionals
+    let number = 7;
+    if number < 5 {
+        println!("number is less than 5");
+    } else if number == 5 {
+        println!("number is 5");
+    } else {
+        println!("number is greater than 5");
+    }
+
+    // loop
+    let mut count = 0;
+    loop {
+        count += 1;
+        if count == 3 {
+            break;
+        }
+        println!("loop count = {}", count);
+    }
+
+    // while
+    let mut n = 3;
+    while n > 0 {
+        println!("while n = {}", n);
+        n -= 1;
+    }
+
+    // for over a range
+    for i in 0..5 {
+        println!("for i = {}", i);
+    }
+
+    // for over an array
+    let numbers = [10, 20, 30];
+    for num in numbers {
+        println!("array number = {}", num);
+    }
+
+    // match (similar to switch)
+    let day = 3;
+    let day_name = match day {
+        1 => "Monday",
+        2 => "Tuesday",
+        3 => "Wednesday",
+        4 => "Thursday",
+        5 => "Friday",
+        6 => "Saturday",
+        7 => "Sunday",
+        _ => "Invalid",
+    };
+    println!("day_name = {}", day_name);
 }
