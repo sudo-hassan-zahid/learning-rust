@@ -87,6 +87,9 @@ fn try_divide(a: i32, b: i32) -> Result<i32, String> {
     Ok(a / b)
 }
 
+mod utils;
+mod math;
+
 fn main() {
     // immutable variable
     let x = 10;
@@ -372,7 +375,7 @@ fn main() {
     let _ = Message::Quit;
     let _ = Message::ChangeColor(0, 0, 0);
 
-     // Closures (anonymous functions)
+    // Closures (anonymous functions)
     let add = |a: i32, b: i32| -> i32 { a + b };
     let result = add(5, 3);
     println!("5 + 3 = {}", result);
@@ -390,12 +393,19 @@ fn main() {
 
     // Using map to transform elements
     let numbers = vec![1, 2, 3, 4, 5];
-    let doubled: Vec<i32> = numbers.iter().map(|n| n * 2).collect();
+    let doubled: Vec<i32> = numbers
+        .iter()
+        .map(|n| n * 2)
+        .collect();
     println!("Doubled = {:?}", doubled);
 
     // Using filter to select elements
     let numbers = vec![10, 15, 20, 25, 30];
-    let even: Vec<i32> = numbers.iter().filter(|n| *n % 2 == 0).cloned().collect();
+    let even: Vec<i32> = numbers
+        .iter()
+        .filter(|n| *n % 2 == 0)
+        .cloned()
+        .collect();
     println!("Even numbers = {:?}", even);
 
     // Using enumerate to get index + value
@@ -434,4 +444,15 @@ fn main() {
     let res: Result<i32, &str> = Ok(10);
     let res_squared = res.map(|v| v * v);
     println!("Result squared = {:?}", res_squared);
+
+    let person = utils::Person::new("Hassan", 30);
+    person.greet();
+
+    math::add(1, 2);
+    math::multiply(3, 4);
+    math::sub(10, 5);
+    math::div(100, 10);
+    math::div(10, 0);
+
+    utils::greet("Hassan")
 }
