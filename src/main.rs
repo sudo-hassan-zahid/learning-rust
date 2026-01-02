@@ -163,4 +163,46 @@ fn main() {
         Message::Move { x, y } => println!("Move to ({}, {})", x, y),
         Message::Write(text) => println!("Write message: {}", text),
         Message::Chang
+
+    // struct
+    // defining a struct
+    struct Person {
+        name: String,
+        age: u8,
+    }
+
+    // creating instances
+    let person1 = Person {
+        name: String::from("Hassan"),
+        age: 25,
+    };
+
+    let mut person2 = Person {
+        name: String::from("Ali"),
+        age: 30,
+    };
+
+    // accessing fields
+    println!("{} is {} years old", person1.name, person1.age);
+
+    // modifying fields (requires mut)
+    person2.age += 1;
+    println!("{} is now {} years old", person2.name, person2.age);
+
+    // defining methods with impl
+    impl Person {
+        fn greet(&self) {
+            println!("Hello, my name is {}", self.name);
+        }
+
+        fn have_birthday(&mut self) {
+            self.age += 1;
+        }
+    }
+
+    // calling methods
+    person1.greet();
+    person2.greet();
+    person2.have_birthday();
+    println!("After birthday, {} is {} years old", person2.name, person2.age);
 }
