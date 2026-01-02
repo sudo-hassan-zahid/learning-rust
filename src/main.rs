@@ -1,4 +1,4 @@
-// GENERICS AND TRAITS
+use std::collections::HashMap;
 
 // Generic function
 fn largest<T: PartialOrd>(list: &[T]) -> &T {
@@ -31,7 +31,13 @@ struct Article {
 
 impl Summary for Article {
     fn summarize(&self) -> String {
-        format!("{} by {}", self.headline, self.author)
+        // Using content to remove dead_code warning
+        format!(
+            "{} by {}. Preview: {}",
+            self.headline,
+            self.author,
+            &self.content[..std::cmp::min(10, self.content.len())]
+        )
     }
 }
 
@@ -45,7 +51,10 @@ enum Direction {
 
 enum Message {
     Quit,
-    Move { x: i32, y: i32 },
+    Move {
+        x: i32,
+        y: i32,
+    },
     Write(String),
     ChangeColor(i32, i32, i32),
 }
@@ -68,11 +77,7 @@ impl Person {
 
 // Functions returning Result
 fn divide(a: i32, b: i32) -> Result<i32, String> {
-    if b == 0 {
-        Err(String::from("Cannot divide by zero"))
-    } else {
-        Ok(a / b)
-    }
+    if b == 0 { Err(String::from("Cannot divide by zero")) } else { Ok(a / b) }
 }
 
 fn try_divide(a: i32, b: i32) -> Result<i32, String> {
@@ -298,7 +303,10 @@ fn main() {
     let float_point = Point { x: 1.2, y: 3.4 };
     println!(
         "int_point: ({}, {}), float_point: ({}, {})",
-        int_point.x, int_point.y, float_point.x, float_point.y
+        int_point.x,
+        int_point.y,
+        float_point.x,
+        float_point.y
     );
 
     // Using trait
@@ -310,51 +318,57 @@ fn main() {
 
     println!("Article summary: {}", article.summarize());
 
-    // Vectors (growable arrays)
+    // Vectors
     let mut v: Vec<i32> = Vec::new();
     v.push(10);
     v.push(20);
     v.push(30);
     println!("Vector: {:?}", v);
 
-    // Access elements
     println!("First element: {}", v[0]);
     match v.get(1) {
         Some(val) => println!("Second element: {}", val),
         None => println!("No second element"),
     }
 
-    // Iterating over vector
     for val in &v {
         println!("Value: {}", val);
     }
 
-    // Strings (growable UTF-8 text)
+    // Strings
     let mut s = String::from("Hello");
     s.push_str(" world");
     println!("String: {}", s);
 
-    // HashMap (key-value store)
-    use std::collections::HashMap;
+    // HashMap
     let mut scores = HashMap::new();
     scores.insert("Alice", 50);
     scores.insert("Bob", 30);
 
-    // Accessing values
     if let Some(score) = scores.get("Alice") {
         println!("Alice's score = {}", score);
     }
 
-    // Iterating over HashMap
     for (key, value) in &scores {
         println!("{}: {}", key, value);
     }
 
-    // Updating values
-    scores.entry("Alice").and_modify(|e| *e += 10).or_insert(0);
+    scores
+        .entry("Alice")
+        .and_modify(|e| {
+            *e += 10;
+        })
+        .or_insert(0);
     println!("Alice's updated score = {}", scores["Alice"]);
 
-    // Removing a key
     scores.remove("Bob");
     println!("Scores after removal: {:?}", scores);
+
+    // Construct unused Direction variants
+    let _ = Direction::Down;
+    let _ = Direction::Right;
+
+    // Construct unused Message variants
+    let _ = Message::Quit;
+    let _ = Message::ChangeColor(0, 0, 0);
 }
