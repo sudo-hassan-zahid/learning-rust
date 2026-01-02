@@ -1,46 +1,62 @@
 fn main() {
-    // Immutable variables (default in Rust)
+    // immutable variable
     let x = 10;
     println!("x = {}", x);
 
-    // Mutable variables
+    // mutable variable
     let mut y = 5;
     println!("y before = {}", y);
-
-    y = 15; // allowed because y is mutable
+    y = 15;
     println!("y after = {}", y);
 
-    // Explicit type annotations
-    let a: i32 = 100;      // 32-bit signed integer
-    let b: f64 = 3.14;     // 64-bit floating point
-
+    // explicit types
+    let a: i32 = 100;
+    let b: f64 = 3.14;
     println!("a = {}, b = {}", a, b);
 
-    // Shadowing (re-declaring a variable)
+    // shadowing
     let z = 10;
-    let z = z + 5;         // shadows the previous z
-    let z = z * 2;         // shadows again
+    let z = z + 5;
+    let z = z * 2;
+    println!("z = {}", z);
 
-    println!("z = {}", z); // 30
-
-    // Constants
+    // constant
     const MAX_USERS: u32 = 1000;
     println!("MAX_USERS = {}", MAX_USERS);
 
-    // Scope example
+    // scope
     let outside = 50;
-
     {
         let inside = 20;
         println!("inside = {}", inside);
-        println!("outside (from inner scope) = {}", outside);
+        println!("outside = {}", outside);
     }
 
-
-    // Destructuring (tuple variables)
+    // tuple destructuring
     let (x1, y1) = (3, 7);
     println!("x1 = {}, y1 = {}", x1, y1);
 
-    // Unused variables (prefix with underscore)
+    // unused variable
     let _unused = 42;
+
+    // next concept: data types
+    let inferred_number = 42;
+    let inferred_float = 2.5;
+    println!("inferred_number = {}, inferred_float = {}", inferred_number, inferred_float);
+
+    let person: (&str, u8, bool) = ("Hassan", 25, true);
+    println!("name = {}, age = {}, active = {}", person.0, person.1, person.2);
+
+    let (name, age, active) = person;
+    println!("{} is {} years old: {}", name, age, active);
+
+    let numbers: [i32; 5] = [10, 20, 30, 40, 50];
+    println!("first = {}, last = {}", numbers[0], numbers[4]);
+
+    let zeros = [0; 3];
+    println!("zeros = {:?}", zeros);
+
+    let mut scores = [90, 85, 88];
+    scores[1] = 95;
+    println!("scores = {:?}", scores);
 }
