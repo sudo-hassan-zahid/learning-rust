@@ -309,4 +309,52 @@ fn main() {
     };
 
     println!("Article summary: {}", article.summarize());
+
+    // Vectors (growable arrays)
+    let mut v: Vec<i32> = Vec::new();
+    v.push(10);
+    v.push(20);
+    v.push(30);
+    println!("Vector: {:?}", v);
+
+    // Access elements
+    println!("First element: {}", v[0]);
+    match v.get(1) {
+        Some(val) => println!("Second element: {}", val),
+        None => println!("No second element"),
+    }
+
+    // Iterating over vector
+    for val in &v {
+        println!("Value: {}", val);
+    }
+
+    // Strings (growable UTF-8 text)
+    let mut s = String::from("Hello");
+    s.push_str(" world");
+    println!("String: {}", s);
+
+    // HashMap (key-value store)
+    use std::collections::HashMap;
+    let mut scores = HashMap::new();
+    scores.insert("Alice", 50);
+    scores.insert("Bob", 30);
+
+    // Accessing values
+    if let Some(score) = scores.get("Alice") {
+        println!("Alice's score = {}", score);
+    }
+
+    // Iterating over HashMap
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
+
+    // Updating values
+    scores.entry("Alice").and_modify(|e| *e += 10).or_insert(0);
+    println!("Alice's updated score = {}", scores["Alice"]);
+
+    // Removing a key
+    scores.remove("Bob");
+    println!("Scores after removal: {:?}", scores);
 }
