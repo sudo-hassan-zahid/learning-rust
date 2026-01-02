@@ -110,4 +110,57 @@ fn main() {
         _ => "Invalid",
     };
     println!("day_name = {}", day_name);
+
+    // enums
+    // defining an enum
+    enum Direction {
+        Up,
+        Down,
+        Left,
+        Right,
+    }
+
+    // using the enum
+    let move1 = Direction::Up;
+    let move2 = Direction::Left;
+
+    // match with enum
+    match move1 {
+        Direction::Up => println!("Moving up"),
+        Direction::Down => println!("Moving down"),
+        Direction::Left => println!("Moving left"),
+        Direction::Right => println!("Moving right"),
+    }
+
+    match move2 {
+        Direction::Up => println!("Moving up"),
+        Direction::Down => println!("Moving down"),
+        Direction::Left => println!("Moving left"),
+        Direction::Right => println!("Moving right"),
+    }
+
+    // enum with data
+    enum Message {
+        Quit,
+        Move { x: i32, y: i32 },
+        Write(String),
+        ChangeColor(i32, i32, i32),
+    }
+
+    let msg1 = Message::Write(String::from("hello"));
+    let msg2 = Message::Move { x: 10, y: 20 };
+
+    // pattern matching with data
+    match msg1 {
+        Message::Quit => println!("Quit message"),
+        Message::Move { x, y } => println!("Move to ({}, {})", x, y),
+        Message::Write(text) => println!("Write message: {}", text),
+        Message::ChangeColor(r, g, b) => println!("Change color to {},{},{}", r, g, b),
+    }
+
+    match msg2 {
+        Message::Quit => println!("Quit message"),
+        Message::Move { x, y } => println!("Move to ({}, {})", x, y),
+        Message::Write(text) => println!("Write message: {}", text),
+        Message::Chang
 }
